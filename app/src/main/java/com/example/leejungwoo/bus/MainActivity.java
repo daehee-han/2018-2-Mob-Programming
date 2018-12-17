@@ -1,10 +1,10 @@
 package com.example.leejungwoo.bus;
 import android.app.Activity;
 import android.os.Bundle;
-
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class MainActivity extends Activity {
@@ -20,7 +20,11 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchResult.class);
-                startActivityForResult(intent, sub); // 액티비티 띄우기
+                EditText content = (EditText) findViewById(R.id.editText);
+                String busNum = content.getText().toString();
+                intent.putExtra("bus", busNum);
+                startActivity(intent);
+                //startActivityForResult(intent, sub); // 액티비티 띄우기
             }
         });
     }
