@@ -5,6 +5,13 @@
     android:layout_height="fill_parent"
     >
 
+    <TextView
+        android:id="@+id/busNumber"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="busNum"
+        android:textSize="30sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,6 +20,6 @@
             android:id="@+id/result"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            />
+            android:textSize="18sp" />
     </ScrollView>
 </LinearLayout>
