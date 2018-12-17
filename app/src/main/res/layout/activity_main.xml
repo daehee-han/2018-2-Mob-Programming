@@ -18,15 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="103dp"
         android:ems="10"
-        android:hint="검색할 버스를 입력하세요."
-        android:inputType="textPersonName" />
+        android:hint="검색할 버스 혹은 정류소를 입력하세요."
+        android:inputType="text" />
 
     <Button
         android:id="@+id/button"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:text="버스 검색"
+        android:text="버스 or 정류장 검색"
         android:textSize="36sp" />
 
     <Button

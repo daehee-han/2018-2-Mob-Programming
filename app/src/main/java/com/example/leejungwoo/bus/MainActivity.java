@@ -19,11 +19,24 @@ public class MainActivity extends Activity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchResult.class);
                 EditText content = (EditText) findViewById(R.id.editText);
-                String busNum = content.getText().toString();
-                intent.putExtra("bus", busNum);
-                startActivity(intent);
+                String input = content.getText().toString();
+                try
+                {
+                    int s = Integer.parseInt(input);
+                    // do something when integer values comes
+                    Intent intent = new Intent(getApplicationContext(), SearchResult.class);
+                    intent.putExtra("bus", input);
+                    startActivity(intent);
+                }
+                catch(NumberFormatException nfe)
+                {
+                    // do something when string values comes
+                    Intent intent2 = new Intent(getApplicationContext(), SearchResult2.class);
+                    intent2.putExtra("stop", input);
+                    startActivity(intent2);
+                }
+
                 //startActivityForResult(intent, sub); // 액티비티 띄우기
             }
         });

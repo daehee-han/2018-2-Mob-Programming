@@ -8,33 +8,35 @@ import android.content.Intent;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class SearchResult extends AppCompatActivity {
+public class SearchResult2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<String> id = new ArrayList<String>();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
+        setContentView(R.layout.activity_search_result2);
 
         String apikey = "saSiyy3augedJEZZYd0Ij2HLMhLQIfXQulIc6PzkUBhqaLYsf9j07%2FvyIaiaymdS9hbTJR%2BFZeVrbMs0CGDNYw%3D%3D";
 
         Intent intent = getIntent();
-        String busNum = intent.getStringExtra("bus");
+        String stopName = intent.getStringExtra("stop");
 
         StrictMode.enableDefaults();
 
-        TextView num = (TextView) findViewById(R.id.busNumber);
+        TextView stop = (TextView) findViewById(R.id.busStop);
         TextView status1 = (TextView) findViewById(R.id.result); // 파싱된 결과확인
 
-        boolean find_busId = false, find_stId = false, find_stNm = false,
+        boolean find_stopId = false, find_no1 = false, find_no2 = false,
                 find_arrmsg1 = false, find_arrmsg2 = false;
-        String busId = null, stId = null, stNm = null, arrmsg1 = null, arrmsg2 = null;
+        String stopId = null, no1 = null, no2 = null, arrmsg1 = null, arrmsg2 = null;
 
         try{
-            URL numurl = new URL("http://ws.bus.go.kr/api/rest/busRouteInfo/getBusRouteList?"
-                    + "ServiceKey="
+            URL numurl = new URL("http://ws.bus.go.kr/api/rest/stationinfo/getStationByName?"
+                    + "serviceKey="
                     + apikey
-                    + "&strSrch=" + busNum
+                    + "&stSrch=" + stopName
             );
             XmlPullParserFactory parserCreator2 = XmlPullParserFactory.newInstance();
             XmlPullParser parser2 = parserCreator2.newPullParser();
@@ -46,15 +48,16 @@ public class SearchResult extends AppCompatActivity {
             while (parserEvent2 != XmlPullParser.END_DOCUMENT){
                 switch(parserEvent2){
                     case XmlPullParser.START_TAG: // parser가 시작 태그를 만나면 실행
-                        if(parser2.getName().equals("busRouteId")){
-                            find_busId = true;
+                        if(parser2.getName().equals("arsId")){
+                            find_stopId = true;
                         }
                         break;
 
                     case XmlPullParser.TEXT: // parser가 내용에 접근했을때
-                        if(find_busId){
-                            busId = parser2.getText();
-                            find_busId = false;
+                        if(find_stopId){
+                            stopId = parser2.getText();
+                            id.add(stopId);
+                            find_stopId = false;
                         }
                         break;
                     case XmlPullParser.END_TAG:
@@ -66,13 +69,13 @@ public class SearchResult extends AppCompatActivity {
         } catch (Exception e){
             status1.setText("Error");
         }
-
+        stopId = id.get(0);
 
         try{
-            URL url = new URL("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?"
+            URL url = new URL("http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid?"
                     + "ServiceKey="
                     + apikey
-                    + "&busRouteId=" + busId
+                    + "&arsId=" + stopId
             ); // 검색 URL 부분
 
             XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
@@ -85,11 +88,8 @@ public class SearchResult extends AppCompatActivity {
             while (parserEvent != XmlPullParser.END_DOCUMENT){
                 switch(parserEvent){
                     case XmlPullParser.START_TAG: // parser가 시작 태그를 만나면 실행
-                        if(parser.getName().equals("stId")){
-                            find_stId = true;
-                        }
-                        if(parser.getName().equals("stNm")){
-                            find_stNm = true;
+                        if(parser.getName().equals("rtNm")){
+                            find_no1 = true;
                         }
                         if(parser.getName().equals("arrmsg1")){
                             find_arrmsg1 = true;
@@ -100,13 +100,9 @@ public class SearchResult extends AppCompatActivity {
                         break;
 
                     case XmlPullParser.TEXT: // parser가 내용에 접근했을때
-                        if(find_stId){
-                            stId = parser.getText();
-                            find_stId = false;
-                        }
-                        if(find_stNm){
-                            stNm = parser.getText();
-                            find_stNm = false;
+                        if(find_no1){
+                            no1 = parser.getText();
+                            find_no1 = false;
                         }
                         if(find_arrmsg1){
                             arrmsg1 = parser.getText();
@@ -119,8 +115,8 @@ public class SearchResult extends AppCompatActivity {
                         break;
                     case XmlPullParser.END_TAG:
                         if(parser.getName().equals("itemList")){
-                            num.setText(busNum);
-                            status1.setText(status1.getText() + "정류장 이름: " + stNm + "\n첫번째 도착 예정 버스: " + arrmsg1 + "\n두번째 도착 예정 버스: " + arrmsg2 + "\n\n");
+                            stop.setText(stopName);
+                            status1.setText(status1.getText() + "버스 번호: " + no1 + "\n" + arrmsg1 + "\n" + arrmsg2 + "\n\n");
                         }
                         break;
                 }
