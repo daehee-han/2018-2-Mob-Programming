@@ -12,6 +12,18 @@
         android:text="stop"
         android:textSize="30sp" />
 
+    <Button
+        android:id="@+id/favorite2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="즐겨찾기 저장" />
+
+    <Button
+        android:id="@+id/delete2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="즐겨찾기 삭제" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

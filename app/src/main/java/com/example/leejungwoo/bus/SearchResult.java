@@ -9,6 +9,9 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 import java.net.URL;
 
+import android.view.View;
+import android.widget.Button;
+
 public class SearchResult extends AppCompatActivity {
 
     @Override
@@ -19,11 +22,11 @@ public class SearchResult extends AppCompatActivity {
         String apikey = "saSiyy3augedJEZZYd0Ij2HLMhLQIfXQulIc6PzkUBhqaLYsf9j07%2FvyIaiaymdS9hbTJR%2BFZeVrbMs0CGDNYw%3D%3D";
 
         Intent intent = getIntent();
-        String busNum = intent.getStringExtra("bus");
+        final String busNum = intent.getStringExtra("bus");
 
         StrictMode.enableDefaults();
 
-        TextView num = (TextView) findViewById(R.id.busNumber);
+        final TextView num = (TextView) findViewById(R.id.busNumber);
         TextView status1 = (TextView) findViewById(R.id.result); // 파싱된 결과확인
 
         boolean find_busId = false, find_stId = false, find_stNm = false,
@@ -130,5 +133,25 @@ public class SearchResult extends AppCompatActivity {
             status1.setText("Error");
         }
 
+        final DBHelper dbHelper = new DBHelper(getApplicationContext(), "Favorite.db", null, 1);
+        Button insert = (Button) findViewById(R.id.favorite);
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.insert(busNum);
+            }
+        });
+
+        Button insert = (Button) findViewById(R.id.delete);
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.delete(busNum);
+            }
+        });
+
+
+
     }
+
 }
