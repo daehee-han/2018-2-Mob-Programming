@@ -34,7 +34,7 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:text="Button"
+        android:text="즐겨찾기"
         android:textSize="36sp" />
 
 </LinearLayout>

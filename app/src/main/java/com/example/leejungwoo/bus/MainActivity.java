@@ -40,5 +40,16 @@ public class MainActivity extends Activity {
                 //startActivityForResult(intent, sub); // 액티비티 띄우기
             }
         });
+
+        Button favo = (Button) findViewById(R.id.button2); // 검색
+
+        favo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Favorite.class);
+                startActivityForResult(intent, sub);
+
+            }
+        });
     }
 }

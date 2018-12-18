@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".SearchResult" />
         <activity android:name=".SearchResult2" />
-        <activity android:name=".buttonActivity"></activity>
+        <activity android:name=".buttonActivity" />
+        <activity android:name=".Favorite"></activity>
     </application>
 
 </manifest>
